@@ -9,7 +9,7 @@ namespace ariel{
 
     static map<string,map <string, double>> unit_map ;
     static vector<pair<string,string>> types ;
-    const double epsilon = 0.0001;
+    const float TOLERANCE = 0.001;
     const int ZERO = 0 ;
     const int ONE = 1 ;
 
@@ -39,7 +39,6 @@ namespace ariel{
                 unit_map[to][from] = 1/num_2 ;
                 types.emplace_back(from,to);
                 types.emplace_back(to,from);
-
 
                 for (auto & ty : types) {
                         string num_1 = ty.first;
@@ -88,14 +87,14 @@ namespace ariel{
         }
         NumberWithUnits NumberWithUnits::operator - (const NumberWithUnits& num){
                 double conv= convert_to(num.m_type,this->m_type,num.m_value).m_value;
-                return NumberWithUnits {this->m_value + conv , this->m_type};
+                return NumberWithUnits {this->m_value - conv , this->m_type};
         }
         NumberWithUnits & NumberWithUnits::operator -= (const NumberWithUnits& num){
                 double conv = convert_to(num.m_type,this->m_type,num.m_value).m_value;
-                this->m_value = this->m_value + conv;
+                this->m_value = this->m_value - conv;
                 return *this;
         }
-        
+
         NumberWithUnits operator * (const NumberWithUnits& num, double n){
                 return NumberWithUnits {num.m_value * n , num.m_type};
         }
@@ -119,8 +118,7 @@ namespace ariel{
         }
         bool operator == (const NumberWithUnits& num_1 , const NumberWithUnits& num_2){
             double conv = convert_to(num_2.m_type,num_1.m_type,num_2.m_value).m_value;
-            return (abs(num_1.m_value - conv) < epsilon);
-            //return (abs((abs(n1.m_value) - abs(converted))) < epsilon);
+            return (abs(num_1.m_value - conv) <= TOLERANCE);
         }
 
         bool operator != (const NumberWithUnits& num_1 , const NumberWithUnits& num_2){
@@ -146,7 +144,7 @@ namespace ariel{
             for (uint i = first + 1; i < end; i++) {
                 if(str.at(i) != ' ' ) {unit += str.at(i);}
             }
-            num.m_value = stod(value);
+            num.m_value = stod(value); // stod change string to double https://www.cplusplus.com/reference/string/stod/
             num.m_type = unit;
             if(unit_map.count(num.m_type) != 0){return in;}
             throw invalid_argument {"the unit not in the file"};

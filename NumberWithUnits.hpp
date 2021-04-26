@@ -3,7 +3,6 @@
 #include <map>
 #include <string>
 #include <vector>
-#include <utility>
 
 namespace ariel {
 
@@ -19,7 +18,7 @@ namespace ariel {
         ~NumberWithUnits() = default ;
         static void read_units(std::ifstream& file);
 
-         // prefix
+        // prefix
         NumberWithUnits &operator++(){
             m_value ++ ;
             return *this ;
@@ -64,22 +63,22 @@ namespace ariel {
         friend NumberWithUnits operator*(const NumberWithUnits& num, double n);
         friend NumberWithUnits operator*(double n, const NumberWithUnits& num);
 
-        friend bool operator==(const NumberWithUnits &num ,const NumberWithUnits &other) ;
+        friend bool operator==(const NumberWithUnits& num, const NumberWithUnits& other) ;
 
-        friend bool operator!=(const NumberWithUnits &num ,const NumberWithUnits &other);
+        friend bool operator!=(const NumberWithUnits& num, const NumberWithUnits& other);
 
-        friend bool operator<(const NumberWithUnits &num ,const NumberWithUnits &other) ;
+        friend bool operator<(const NumberWithUnits& num, const NumberWithUnits& other) ;
 
-        friend bool operator>(const NumberWithUnits &num ,const NumberWithUnits &other) ;
+        friend bool operator>(const NumberWithUnits& num, const NumberWithUnits& other) ;
 
-        friend bool operator<=(const NumberWithUnits &num ,const NumberWithUnits &other);
+        friend bool operator<=(const NumberWithUnits& num, const NumberWithUnits& other);
 
-        friend bool operator>=(const NumberWithUnits &num ,const NumberWithUnits &other);
+        friend bool operator>=(const NumberWithUnits& num, const NumberWithUnits& other);
 
         //Input and Output
-        friend std::ostream &operator<<(std::ostream &os, const NumberWithUnits &num);
+        friend std::ostream &operator<<(std::ostream& os, const NumberWithUnits& num);
 
-        friend std::istream &operator>>(std::istream &in, NumberWithUnits &num);
+        friend std::istream &operator>>(std::istream& in, NumberWithUnits& num);
 
     };
 }
