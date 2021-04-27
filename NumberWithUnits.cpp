@@ -135,17 +135,24 @@ namespace ariel{
             string str;
             //check input format
             getline (in, str,']');
-            string value; string unit;
-            uint first = str.find('[');
+            string value; 
+            string type;
+            uint first = str.find('['); // find the index of first '['
             uint end = str.length();
             for (uint i = 0; i < first; i++) {
-                if (str.at(i) != ' ') {value += str.at(i);}
+                if (str.at(i) == ' ') {} // skip whitespace
+                else {
+                    value += str.at(i);
+                }
             }
             for (uint i = first + 1; i < end; i++) {
-                if(str.at(i) != ' ' ) {unit += str.at(i);}
+                if (str.at(i) == ' ') {} // skip whitespace
+                else {
+                    type += str.at(i);
+                }
             }
             num.m_value = stod(value); // stod change string to double https://www.cplusplus.com/reference/string/stod/
-            num.m_type = unit;
+            num.m_type = type;
             if(unit_map.count(num.m_type) != 0){return in;}
             throw invalid_argument {"the unit not in the file"};
         }
